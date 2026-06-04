@@ -8,7 +8,8 @@ const initDb = async () => {
     // Extensão para UUID se necessário (PostgreSQL >= 9.4)
     await client.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
 
-    // Tabela de Usuários
+    // Criar Tabela de Usuários
+
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

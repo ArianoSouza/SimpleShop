@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
     // Buscar usuário
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (result.rows.length === 0) {
-      return res.status(400).json({ message: 'Credenciais inválidas' });
+      return res.status(404).json({ message: 'E-mail não cadastrado' });
     }
 
     const user = result.rows[0];
@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response) => {
     // Verificar senha
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Credenciais inválidas' });
+      return res.status(401).json({ message: 'Senha incorreta' });
     }
 
     // Gerar Token
