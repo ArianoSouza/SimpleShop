@@ -19,6 +19,7 @@ export interface ShoppingList {
   id: string;
   name: string;
   description: string;
+  status: 'OPEN' | 'COMPLETED';
   created_at: string;
   admin_id: string;
   items?: ShoppingItem[];

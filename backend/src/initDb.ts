@@ -26,9 +26,20 @@ const initDb = async () => {
         id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
         name TEXT NOT NULL,
         description TEXT,
+        status TEXT DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'COMPLETED')),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         admin_id UUID REFERENCES users(id) ON DELETE CASCADE
       );
+    `);
+
+    // Garantir que a coluna status existe se a tabela já foi criada anteriormente
+    await client.query(`
+      DO $$ 
+      BEGIN 
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='shopping_lists' AND column_name='status') THEN
+          ALTER TABLE shopping_lists ADD COLUMN status TEXT DEFAULT 'OPEN' CHECK (status IN ('OPEN', 'COMPLETED'));
+        END IF;
+      END $$;
     `);
 
     // Tabela de Itens das Listas
@@ -40,6 +51,17 @@ const initDb = async () => {
         price TEXT,
         checked BOOLEAN DEFAULT FALSE,
         list_id UUID REFERENCES shopping_lists(id) ON DELETE CASCADE
+      );
+    `);
+
+    // Tabela de Recuperação de Senha
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS password_resets (
+        id SERIAL PRIMARY KEY,
+        email TEXT NOT NULL,
+        code TEXT NOT NULL,
+        expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        used BOOLEAN DEFAULT FALSE
       );
     `);
 

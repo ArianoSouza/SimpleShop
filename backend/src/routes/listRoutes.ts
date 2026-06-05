@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllLists, getListById, createList, updateList } from '../controllers/listController';
+import { getAllLists, getListById, createList, updateList, deleteList } from '../controllers/listController';
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
@@ -11,5 +11,6 @@ router.get('/', getAllLists);
 router.get('/:id', getListById);
 router.post('/', createList);
 router.put('/:id', updateList);
+router.delete('/:id', deleteList);
 
 export default router;
