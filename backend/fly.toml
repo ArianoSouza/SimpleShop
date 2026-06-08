@@ -1,0 +1,12 @@
+app = "simpleshop" # Substitua pelo nome exato do seu app no Fly.io
+primary_region = "gru" # "gru" para São Paulo ou "gig" para Rio de Janeiro
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 3000 # A mesma porta do seu Dockerfile e da sua API
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
