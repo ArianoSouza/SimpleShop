@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db';
+import { sendRecoveryEmail } from '../lib/mail';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -97,11 +98,12 @@ export const requestPasswordReset = async (req: Request, res: Response) => {
       [email, code, expiresAt]
     );
 
-    // 4. Simular envio de e-mail (Log no console)
-    console.log(`\n--- E-MAIL DE RECUPERAÇÃO ---`);
-    console.log(`Para: ${email}`);
-    console.log(`Código: ${code}`);
-    console.log(`-----------------------------\n`);
+    // 4. Enviar e-mail real usando Nodemailer
+    try {
+      await sendRecoveryEmail(email, code);
+    } catch (mailError) {
+      console.error('Erro ao enviar e-mail:', mailError);
+    }
 
     res.json({ message: 'Código de recuperação enviado para o seu e-mail.' });
   } catch (err) {
