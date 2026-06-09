@@ -10,6 +10,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Verificar conexão SMTP na inicialização
+transporter.verify((error, success) => {
+  if (error) {
+    console.error(' [MAIL] Erro na configuração do SMTP:', error.message);
+    console.log(' [MAIL] Verifique as variáveis: MAIL_HOST, MAIL_USER, MAIL_PASS');
+  } else {
+    console.log(' [MAIL] Servidor pronto para enviar e-mails');
+  }
+});
+
 export const sendRecoveryEmail = async (to: string, code: string) => {
   const mailOptions = {
     from: `"SimpleShop" <${process.env.MAIL_FROM || process.env.MAIL_USER}>`,
