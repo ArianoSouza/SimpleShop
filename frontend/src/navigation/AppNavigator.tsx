@@ -7,6 +7,7 @@ import { View, ActivityIndicator } from 'react-native';
 
 import { LoginScreen } from '../screens/LoginScreen';
 import { CadastroScreen } from '../screens/CadastroScreen';
+import { RecuperarSenhaScreen } from '../screens/RecuperarSenhaScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ListaScreen } from '../screens/ListaScreen';
 import { NovaListaScreen } from '../screens/NovaListaScreen';
@@ -45,6 +46,7 @@ export const AppNavigator = () => {
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Cadastro" component={CadastroScreen} />
+        <Stack.Screen name="RecuperarSenha" component={RecuperarSenhaScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Lista" component={ListaScreen} />
         <Stack.Screen name="NovaLista" component={NovaListaScreen} />

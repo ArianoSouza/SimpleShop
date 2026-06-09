@@ -7,7 +7,7 @@ import { resetToLogin } from '../navigation/RootNavigation';
 // Em desenvolvimento (__DEV__), usamos localhost (ou o IP 10.0.2.2 para emuladores Android)
 // Em produção (Build do APK), usamos a URL do Fly.io
 const BASE_URL = __DEV__ 
-  ? 'http://10.0.2.2:3000/api' 
+  ? 'http://192.168.1.12:3000/api' 
   : 'https://simpleshop.fly.dev/api';
 
 export const endpoints = {
@@ -32,7 +32,9 @@ export const requestPasswordReset = async (email: string) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email }),
   });
-  return await response.json();
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Erro ao solicitar recuperação');
+  return data;
 };
 
 export const verifyResetCode = async (email: string, code: string) => {

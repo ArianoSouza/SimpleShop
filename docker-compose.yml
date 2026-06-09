@@ -25,10 +25,20 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run dev
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/simpleshop
       - JWT_SECRET=development_secret_key_12345
       - PORT=3000
+      - MAIL_HOST=${MAIL_HOST:-smtp.gmail.com}
+      - MAIL_PORT=${MAIL_PORT:-587}
+      - MAIL_SECURE=${MAIL_SECURE:-false}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASS=${MAIL_PASS}
+      - MAIL_FROM=${MAIL_FROM}
     depends_on:
       db:
         condition: service_healthy

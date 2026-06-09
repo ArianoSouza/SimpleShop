@@ -7,7 +7,6 @@ import { createShoppingList, fetchLists } from '../services/api';
 
 export const NovaListaScreen = ({ navigation }: any) => {
   const [name, setName] = useState('');
-  const [participants, setParticipants] = useState('');
   const [items, setItems] = useState<string[]>([]);
   const [currentItem, setCurrentItem] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,7 +44,6 @@ export const NovaListaScreen = ({ navigation }: any) => {
       setShowCopyModal(false);
     } finally {
       setLoadingLists(false);
-      navigation.navigate('Home');
     }
   };
 
@@ -83,7 +81,7 @@ export const NovaListaScreen = ({ navigation }: any) => {
 
       const result = await createShoppingList({ 
         name: name.trim(), 
-        description: participants ? `Participantes: ${participants}` : '',
+        description: '',
         items: formattedItems
       });
       
@@ -97,7 +95,6 @@ export const NovaListaScreen = ({ navigation }: any) => {
           onPress: () => navigation.navigate('Home') 
         }
       ], { cancelable: false });
-      navigation.navigate('Home');
     } catch (error: any) {
       Alert.alert('Erro', error.message || 'Não foi possível criar a lista.');
     } finally {
@@ -133,16 +130,6 @@ export const NovaListaScreen = ({ navigation }: any) => {
           disabled={loading}
         />
         
-        <CustomInput 
-          label="Convidar participantes" 
-          placeholder="email@exemplo.com"
-          keyboardType="email-address"
-          value={participants}
-          onChangeText={setParticipants}
-          disabled={loading}
-          right={<TextInput.Icon icon="account-plus-outline" color="#5D4D5D" />}
-        />
-
         <View style={styles.addItemHeader}>
           <Text variant="titleMedium" style={styles.sectionLabel}>Itens da lista</Text>
           <TouchableOpacity onPress={handleOpenCopyModal} disabled={loading}>

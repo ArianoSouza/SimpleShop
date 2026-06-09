@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SimpleShop",
-    "slug": "simpleshop",
+    "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,6 +26,7 @@
       "eas": {
         "projectId": "240f858e-8c55-4e14-bf82-3676ca7ec998"
       }
-    }
+    },
+    "owner": "arianosouza"
   }
 }

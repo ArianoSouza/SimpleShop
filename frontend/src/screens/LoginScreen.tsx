@@ -44,7 +44,7 @@ export const LoginScreen = ({ navigation }: any) => {
     setLoading(true);
     try {
       await login(email.trim(), password);
-
+      navigation.replace('Home');
     } catch (error: any) {
       const errorMsg = error.message ? error.message.trim() : 'Erro ao fazer login';
       const lowerMsg = errorMsg.toLowerCase();
@@ -61,7 +61,6 @@ export const LoginScreen = ({ navigation }: any) => {
       }
     } finally {
       setLoading(false);
-      navigation.replace('Home');
     }
   };
 
@@ -110,7 +109,11 @@ export const LoginScreen = ({ navigation }: any) => {
       <View style={styles.footer}>
         <Divider style={styles.divider} />
         <View style={styles.footerButtons}>
-          <TouchableOpacity style={styles.footerLink} disabled={loading}>
+          <TouchableOpacity 
+            style={styles.footerLink} 
+            onPress={() => navigation.navigate('RecuperarSenha')}
+            disabled={loading}
+          >
             <Text variant="labelLarge" style={styles.linkText}>Esqueci minha senha</Text>
           </TouchableOpacity>
           <View style={styles.verticalDivider} />
