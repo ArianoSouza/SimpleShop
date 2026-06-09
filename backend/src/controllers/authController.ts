@@ -101,11 +101,11 @@ export const requestPasswordReset = async (req: Request, res: Response) => {
     // 4. Enviar e-mail real usando Nodemailer
     try {
       await sendRecoveryEmail(email, code);
+      res.json({ message: 'Código de recuperação enviado para o seu e-mail.' });
     } catch (mailError) {
-      console.error('Erro ao enviar e-mail:', mailError);
+      console.error('Erro crítico ao enviar e-mail:', mailError);
+      res.status(500).json({ message: 'Erro ao enviar e-mail de recuperação. Verifique a configuração do servidor.' });
     }
-
-    res.json({ message: 'Código de recuperação enviado para o seu e-mail.' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao solicitar recuperação de senha' });
